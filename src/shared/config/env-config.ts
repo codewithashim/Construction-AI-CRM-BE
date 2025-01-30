@@ -1,8 +1,18 @@
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 import path from 'path';
 import { envSchema } from '../validation/env-validation';
- 
-dotenv.config({ path: path.join(process.cwd(), '.env') });
+
+if (!process.env.NODE_ENV) {
+    process.env.NODE_ENV = 'development';
+}
+
+const envFilePath = path.resolve(
+  process.cwd(),
+  process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development'
+);
+
+// Load environment variables from the appropriate file
+dotenv.config({ path: envFilePath });
 
 // Validate and parse environment variables
 const parsedEnv = envSchema.safeParse(process.env);
@@ -12,9 +22,10 @@ if (!parsedEnv.success) {
   process.exit(1);
 }
 
+// Exporting the parsed and validated environment configuration
 export const envConfig = {
   env: parsedEnv.data.NODE_ENV,
-  port: Number(parsedEnv.data.PORT),
+  port: parsedEnv.data.PORT,
   databaseUrl: parsedEnv.data.MONGO_URI,
   domain: parsedEnv.data.DOMAIN,
   jwt: {
