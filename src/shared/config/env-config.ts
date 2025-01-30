@@ -1,18 +1,33 @@
 import dotenv from 'dotenv';
 import path from 'path';
-
+import { envSchema } from '../validation/env-validation';
+ 
 dotenv.config({ path: path.join(process.cwd(), '.env') });
 
-export const env_config = {
-  env: process.env.NODE_ENV,
-  port: process.env.PORT,
-  database_url: process.env.MONGO_URI,
-  
-  domain: process.env.DOMAIN,
+// Validate and parse environment variables
+const parsedEnv = envSchema.safeParse(process.env);
+
+if (!parsedEnv.success) {
+  console.error('❌ Invalid environment variables:', parsedEnv.error.format());
+  process.exit(1);
+}
+
+export const envConfig = {
+  env: parsedEnv.data.NODE_ENV,
+  port: Number(parsedEnv.data.PORT),
+  databaseUrl: parsedEnv.data.MONGO_URI,
+  domain: parsedEnv.data.DOMAIN,
   jwt: {
-    secret: process.env.JWT_SECRET,
-    refresh_secret: process.env.JWT_REFRESH_SECRET,
-    expiresIn: process.env.JWT_EXPIRATION_TIME,
-    refresh_expires: process.env.JWT_REFRESH_EXPIRATION_TIME,
+    secret: parsedEnv.data.JWT_SECRET,
+    refreshSecret: parsedEnv.data.JWT_REFRESH_SECRET,
+    expiresIn: parsedEnv.data.JWT_EXPIRATION_TIME,
+    refreshExpiresIn: parsedEnv.data.JWT_REFRESH_EXPIRATION_TIME,
   },
+  aws: {
+    accessKeyId: parsedEnv.data.AWS_ACCESS_KEY_ID,
+    secretAccessKey: parsedEnv.data.AWS_SECRET_ACCESS_KEY,
+    region: parsedEnv.data.AWS_REGION,
+    bucketName: parsedEnv.data.AWS_BUCKET_NAME,
+  },
+  allowDomains: parsedEnv.data.ALLOW_DOMAINS?.split(',') || [],
 };

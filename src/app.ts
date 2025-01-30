@@ -1,34 +1,55 @@
 import cors from 'cors';
-import express, { Application, NextFunction, Request, Response } from 'express';
+import express, { Application, Request, Response } from 'express';
 import httpStatus from 'http-status';
 import { configureRoutes } from './shared/config/router-config';
- 
+import path from 'path';
+
 const app: Application = express();
 
-// Middleware
+/* 
+|--------------------------------------------------------------------------
+| Middleware Configuration
+|--------------------------------------------------------------------------
+| 1. CORS: Enables Cross-Origin Resource Sharing for frontend communication.
+| 2. JSON Parser: Parses incoming JSON payloads.
+| 3. URL Encoded Parser: Parses URL-encoded data with extended support.
+*/
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Configure routes
+/* 
+|--------------------------------------------------------------------------
+| Route Configuration
+|--------------------------------------------------------------------------
+| Registers all application routes using a centralized router configuration.
+*/
 configureRoutes(app);
 
-// Handle 404 errors
-app.use((req: Request, res: Response, next: NextFunction) => {
-  res.status(httpStatus.NOT_FOUND).json({
-    success: false,
-    message: 'Not Found',
-    errorMessages: [
-      {
-        path: req.originalUrl,
-        message: 'API Not Found',
-      },
-    ],
-  });
-  next();
+/* 
+|--------------------------------------------------------------------------
+| 404 - Not Found Handler
+|--------------------------------------------------------------------------
+| Handles requests to unknown routes and returns a standardized response.
+*/
+app.use((req: Request, res: Response) => {
+    res.status(httpStatus.NOT_FOUND).json({
+        success: false,
+        message: 'Not Found',
+        errorMessages: [
+            {
+                path: req.originalUrl,
+                message: 'API Not Found',
+            },
+        ],
+    });
 });
 
-// Global error handler
- 
-
+/* 
+|--------------------------------------------------------------------------
+| Export Application Instance
+|--------------------------------------------------------------------------
+| Exports the configured Express application for use in the server file.
+*/
 export default app;
