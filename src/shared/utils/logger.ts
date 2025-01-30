@@ -12,7 +12,7 @@ const logger = winston.createLogger({
   ],
 });
 
-const errorlogs = winston.createLogger({
+const errorLogger = winston.createLogger({
   level: 'error',
   format: winston.format.combine(
     winston.format.timestamp(),
@@ -24,4 +24,4 @@ const errorlogs = winston.createLogger({
   ],
 });
 
-export { logger, errorlogs };
+export { logger, errorLogger };
