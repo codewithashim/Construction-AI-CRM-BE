@@ -1,7 +1,7 @@
 {
   "name": "construction-crm-backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "/src/server.ts",
   "scripts": {
     "test": "jest",
     "lint:check": "eslint --ignore-path .eslintignore --ext .js,.ts .",
@@ -9,8 +9,15 @@
     "prettier:check": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
     "prettier:fix": "prettier --write .",
     "lint-prettier": "lint:check && prettier:check",
-    "start": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "dev": "ts-node-dev --respawn --transpile-only src/server.ts"
+    "start": "node dist/server.js",
+    "build": "tsc",
+    "prod:start": "NODE_ENV=production node src/server.ts",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "docker:build:dev": "docker compose build dev",
+    "docker:build:prod": "docker compose build prod",
+    "docker:run:dev": "docker compose up dev",
+    "docker:run:prod": "docker compose up prod",
+    "docker:rebuild": "docker compose up --build"
   },
   "keywords": [],
   "author": "",

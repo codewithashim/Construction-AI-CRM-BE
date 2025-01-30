@@ -3,6 +3,7 @@ import express, { Application, Request, Response } from 'express';
 import httpStatus from 'http-status';
 import { configureRoutes } from './shared/config/router-config';
 import path from 'path';
+import dotenv from 'dotenv';
 
 const app: Application = express();
 
@@ -15,6 +16,7 @@ const app: Application = express();
 | 3. URL Encoded Parser: Parses URL-encoded data with extended support.
 */
 app.use(cors());
+dotenv.config();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
