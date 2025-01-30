@@ -4,6 +4,7 @@ import httpStatus from 'http-status';
 import { configureRoutes } from './shared/config/router-config';
 import path from 'path';
 import dotenv from 'dotenv';
+import globalErrorHandler from './shared/errors/global-error';
 
 const app: Application = express();
 
@@ -20,6 +21,7 @@ dotenv.config();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use(globalErrorHandler);
 
 /* 
 |--------------------------------------------------------------------------
