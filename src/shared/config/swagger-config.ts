@@ -3,10 +3,16 @@ import swaggerJsdoc from 'swagger-jsdoc';
 /**
  * Swagger configuration options for the Construction CRM API.
  *
+ * This configuration defines the OpenAPI specification for the API, including
+ * metadata, server information, security schemes, and the paths to the API
+ * documentation files.
+ *
+ * @constant
  * @type {swaggerJsdoc.Options}
- * @property {object} definition - The OpenAPI definition object.
+ *
+ * @property {object} definition - The OpenAPI specification definition.
  * @property {string} definition.openapi - The OpenAPI version.
- * @property {object} definition.info - Information about the API.
+ * @property {object} definition.info - Metadata about the API.
  * @property {string} definition.info.title - The title of the API.
  * @property {string} definition.info.version - The version of the API.
  * @property {string} definition.info.description - A brief description of the API.
@@ -18,9 +24,14 @@ import swaggerJsdoc from 'swagger-jsdoc';
  * @property {string} definition.info.contact.url - The URL to the contact person's website.
  * @property {string} definition.info.contact.email - The email address of the contact person.
  * @property {Array<object>} definition.servers - The list of servers where the API is hosted.
- * @property {string} definition.servers[].url - The URL of the server.
- * @property {string} definition.servers[].description - A brief description of the server.
- * @property {Array<string>} apis - The list of files containing API documentation annotations.
+ * @property {object} definition.components - The components used in the API.
+ * @property {object} definition.components.securitySchemes - The security schemes for the API.
+ * @property {object} definition.components.securitySchemes.bearerAuth - The bearer authentication scheme.
+ * @property {string} definition.components.securitySchemes.bearerAuth.type - The type of the security scheme.
+ * @property {string} definition.components.securitySchemes.bearerAuth.scheme - The scheme name.
+ * @property {string} definition.components.securitySchemes.bearerAuth.bearerFormat - The format of the bearer token.
+ * @property {Array<object>} definition.security - The security requirements for the API.
+ * @property {Array<string>} apis - The paths to the API documentation files.
  */
 
 const options: swaggerJsdoc.Options = {
@@ -50,6 +61,16 @@ const options: swaggerJsdoc.Options = {
                 description: 'Production server',
             },
         ],
+        components: {
+            securitySchemes: {
+                bearerAuth: {
+                    type: 'http',
+                    scheme: 'bearer',
+                    bearerFormat: 'JWT',
+                },
+            },
+        },
+        security: [{ bearerAuth: [] }],
     },
     apis: [
         './src/app/modules/**/*.routes.ts',
@@ -57,6 +78,4 @@ const options: swaggerJsdoc.Options = {
     ],
 };
 
-const swaggerSpec = swaggerJsdoc(options);
-
-export default swaggerSpec;
+export default swaggerJsdoc(options);
