@@ -14,4 +14,5 @@ export const envSchema = z.object({
   AWS_REGION: z.string().optional(),
   AWS_BUCKET_NAME: z.string().optional(),
   ALLOW_DOMAINS: z.string().optional(),
+  BCRYPT_SALT_ROUND: z.string().optional(),
 });
