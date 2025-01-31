@@ -4,6 +4,11 @@
       "source.fixAll.tslint": "explicit",
       "source.organizeImports": "explicit"
     },
-    "githubPullRequests.ignoredPullRequestBranches": ["master-branch"]
+    "githubPullRequests.ignoredPullRequestBranches": [
+      "master-branch"
+    ],
+    "cSpell.words": [
+      "Gauthguard"
+    ]
   }
   
