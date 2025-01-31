@@ -27,7 +27,6 @@ const authGuard =
         try {
             // Get authorization token
             const token = req.headers.authorization?.split(' ')[1];
-
             if (!token) {
                 throw new ApiError(
                     httpStatus.UNAUTHORIZED,
@@ -49,10 +48,10 @@ const authGuard =
                     apiResponseMessage.AUTH.TOKEN_INVALID,
                 );
             }
-
+ 
             // Attach user to request
             req.user = verifiedUser;
-
+ 
             // Check role-based authorization
             if (
                 requiredRoles.length &&

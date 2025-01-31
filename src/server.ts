@@ -2,7 +2,6 @@ import app from './app';
 import { connectDB } from './shared/config/db-config';
 import { envConfig } from './shared/config/env-config';
 import { logger, errorLogger } from './shared/utils/logger';
-import swaggerDocs from './shared/utils/swagger';
 
 /* 
 |--------------------------------------------------------------------------
@@ -19,6 +18,9 @@ async function bootstrap() {
         const server = app.listen(envConfig.port, () => {
             logger.info(
                 `🚀 Server is running at http://localhost:${envConfig.port!}/api`,
+            );
+            logger.info(
+                `🔍 Health checks available at http://localhost:${envConfig.port!}/api/v1/health`,
             );
             logger.info(
                 `📚 Swagger documentation available at http://localhost:${envConfig.port!}/api-docs`,

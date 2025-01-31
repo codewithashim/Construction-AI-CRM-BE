@@ -25,10 +25,8 @@ const registerUser = catchAsync(async (req: Request, res: Response) => {
 
 const loginUser = catchAsync(async (req: Request, res: Response) => {
     const loginData = req.body;
-    console.log("🚀 ~ loginUser ~ loginData:", loginData)
     
     const result = await AuthService.loginUser(loginData);
-    console.log("🚀 ~ loginUser ~ result:", result)
     const { refreshToken, ...tokenData } = result;
 
     if (refreshToken) {
