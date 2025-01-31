@@ -1,71 +1,64 @@
-import { Request, Response } from "express";
-import catchAsync from "../../../shared/catchAsync";
-import { UserService } from "./auth.service";
-import { ILoginUserResponse, IRefreshTokenResponse, IUser } from "../user/user.interface";
-import sendResponse from "../../../shared/sendResponse";
-import httpStatus from "http-status";
-import config from "../../../config";
+import { Request, Response } from 'express';
+import httpStatus from 'http-status';
+import catchAsync from '../../../shared/utils/catch-async';
+import { AuthService } from './auth.service';
+import sendResponse from '../../../shared/utils/send-response';
+import {
+    IAuthUser,
+    ILoginResponse,
+    IRefreshTokenResponse,
+} from './auth.interface';
+import { configureAuthCookie } from '../../../shared/utils/auth.utils';
+import { apiResponseMessage } from '../../../shared/constants/api-response-message';
 
+const registerUser = catchAsync(async (req: Request, res: Response) => {
+    const userData = req.body;
+    const result = await AuthService.registerUser(userData);
 
-const createUser = catchAsync(async (req: Request, res: Response) => {
-  const userData = req.body;
-  const result = await UserService.createUser(userData);
-
-  sendResponse<IUser>(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "user created successfully!",
-    data: result,
-  });
+    sendResponse<IAuthUser>(res, {
+        statusCode: httpStatus.CREATED,
+        success: true,
+        message: apiResponseMessage.AUTH.REGISTER_SUCCESS,
+        data: result,
+    });
 });
 
 const loginUser = catchAsync(async (req: Request, res: Response) => {
-  const { ...loginData } = req.body;
-  const result = await UserService.userLogin(loginData);
-  const { refreshToken, ...others } = result;
+    const loginData = req.body;
+    console.log("🚀 ~ loginUser ~ loginData:", loginData)
+    
+    const result = await AuthService.loginUser(loginData);
+    console.log("🚀 ~ loginUser ~ result:", result)
+    const { refreshToken, ...tokenData } = result;
 
-  const cookieOpction = {
-    secure: config.env === "production" ? true : false,
-    httpOnly: true,
-  };
-  res.cookie("refreshToken", refreshToken, cookieOpction);
+    if (refreshToken) {
+        configureAuthCookie(res, 'refreshToken', refreshToken);
+    }
 
-  if ("refreshToken" in result) {
-    delete result.refreshToken;
-  }
-
-  sendResponse<ILoginUserResponse>(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Login Successful",
-    data: others,
-  });
+    sendResponse<ILoginResponse>(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: apiResponseMessage.AUTH.LOGIN_SUCCESS,
+        data: tokenData,
+    });
 });
 
 const refreshToken = catchAsync(async (req: Request, res: Response) => {
-  const { refreshToken } = req.cookies;
-  const result = await UserService.refreshToken(refreshToken);
+    const { refreshToken } = req.cookies;
+    const result = await AuthService.refreshToken(refreshToken);
 
-  const cookieOpction = {
-    secure: config.env === "production" ? true : false,
-    httpOnly: true,
-  };
-  res.cookie("refreshToken", refreshToken, cookieOpction);
+    configureAuthCookie(res, 'refreshToken', refreshToken);
 
-  if ("refreshToken" in result) {
-    delete result.refreshToken;
-  }
-
-  sendResponse<IRefreshTokenResponse>(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Refresh Token Successful",
-    data: result,
-  });
+    sendResponse<IRefreshTokenResponse>(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: apiResponseMessage.AUTH.REFRESH_TOKEN_SUCCESS,
+        data: result,
+    });
 });
 
-export const UserController = {
-  createUser,
-  loginUser,
-  refreshToken,
+export const AuthController = {
+    registerUser,
+    loginUser,
+    refreshToken,
 };

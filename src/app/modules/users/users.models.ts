@@ -44,14 +44,17 @@ const UserSchema = new Schema<IUser>(
 );
 
 UserSchema.methods.isUserExist = async function (
-    id: string,
+    email: string,
 ): Promise<Partial<IUser> | null> {
     const user = await User.findOne(
-        { id },
+        { email },
         {
-            password: 1,
             id: 1,
+            name: 1,
+            email: 1,
+            phone: 1,
             role: 1,
+            password: 1,
         },
     );
 

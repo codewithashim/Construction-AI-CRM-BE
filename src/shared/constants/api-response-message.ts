@@ -15,9 +15,11 @@ export const apiResponseMessage = {
         TOKEN_EXPIRED: 'Token has expired',
         TOKEN_INVALID: 'Invalid token',
         TOKEN_MISSING: 'Token is missing',
+        REFRESH_TOKEN_SUCCESS: 'Token refreshed successfully',
         REFRESH_TOKEN_INVALID: 'Invalid refresh token',
         REFRESH_TOKEN_EXPIRED: 'Refresh token has expired',
         REFRESH_TOKEN_MISSING: 'Refresh token is missing',
+        
     },
 
     USERS: {

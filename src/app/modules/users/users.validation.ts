@@ -23,33 +23,6 @@ const userValidationMessages = {
     },
 };
 
-const createUserZodSchema = z.object({
-    body: z.object({
-        email: z
-            .string({
-                required_error: userValidationMessages.email.required,
-            })
-            .email(userValidationMessages.email.invalid),
-        password: z
-            .string({
-                required_error: userValidationMessages.password.required,
-            })
-            .min(6, userValidationMessages.password.minLength),
-        role: z.enum(Object.values(ENUM_USER_ROLE) as [string, ...string[]], {
-            required_error: userValidationMessages.role.required,
-            invalid_type_error: userValidationMessages.role.invalid,
-        }),
-        name: z.string({
-            required_error: userValidationMessages.name.required,
-        }),
-        phone: z
-            .string({
-                required_error: userValidationMessages.phone.required,
-            })
-            .regex(/^\+?[1-9]\d{1,14}$/, userValidationMessages.phone.invalid),
-    }),
-});
-
 const updateUserZodSchema = z.object({
     body: z
         .object({
@@ -70,7 +43,7 @@ const updateUserZodSchema = z.object({
             phone: z
                 .string()
                 .regex(
-                    /^\+?[1-9]\d{1,14}$/,
+                    /^\+?[0-9]\d{1,14}$/,
                     userValidationMessages.phone.invalid,
                 )
                 .optional(),
@@ -78,30 +51,6 @@ const updateUserZodSchema = z.object({
         .optional(),
 });
 
-const loginUserZodSchema = z.object({
-    body: z.object({
-        email: z
-            .string({
-                required_error: userValidationMessages.email.required,
-            })
-            .email(userValidationMessages.email.invalid),
-        password: z.string({
-            required_error: userValidationMessages.password.required,
-        }),
-    }),
-});
-
-const refreshTokenSchema = z.object({
-    cookies: z.object({
-        refreshToken: z.string({
-            required_error: 'Refresh token is required',
-        }),
-    }),
-});
-
 export const userValidation = {
-    createUserZodSchema,
     updateUserZodSchema,
-    loginUserZodSchema,
-    refreshTokenSchema,
 };
