@@ -48,11 +48,18 @@ const loginUser = async (payload: ILoginUser): Promise<ILoginResponse> => {
         );
     }
 
+    if (!isUserExist) {
+        throw new ApiError(
+            httpStatus.NOT_FOUND,
+            apiResponseMessage.USERS.NOT_FOUND,
+        );
+    }
+
     const tokenPayload = {
-        userId: user._id,
-        email: user.email,
-        name: user.name,
-        role: user.role,
+        userId: isUserExist?._id,
+        email: isUserExist?.email,
+        name: isUserExist?.name,
+        role: isUserExist?.role,
     };
 
     const accessToken = jwtHelper.createToken(
@@ -75,7 +82,6 @@ const loginUser = async (payload: ILoginUser): Promise<ILoginResponse> => {
 
 const refreshToken = async (token: string): Promise<IRefreshTokenResponse> => {
     let verifiedToken;
-
     try {
         verifiedToken = jwtHelper.verifyToken(
             token,
@@ -87,9 +93,7 @@ const refreshToken = async (token: string): Promise<IRefreshTokenResponse> => {
             apiResponseMessage.AUTH.REFRESH_TOKEN_INVALID,
         );
     }
-
     const { email } = verifiedToken;
-
     const user = new User();
     const isUserExist = await user.isUserExist(email);
     if (!isUserExist) {

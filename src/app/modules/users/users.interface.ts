@@ -2,6 +2,7 @@ import { Model } from 'mongoose';
 import { ENUM_USER_ROLE } from '../../../shared/enums/users-enum';
 
 export type IUser = {
+    _id?: string;
     name: string;
     email: string;
     phone: string;
