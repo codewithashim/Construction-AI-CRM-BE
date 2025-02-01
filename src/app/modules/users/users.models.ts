@@ -30,6 +30,14 @@ const UserSchema = new Schema<IUser>(
             required: true,
             select: 0,
         },
+        resetPasswordToken: {
+            type: String,
+            select: false,
+        },
+        resetPasswordExpires: {
+            type: Date,
+            select: false,
+        },
     },
     {
         timestamps: true,
@@ -37,6 +45,8 @@ const UserSchema = new Schema<IUser>(
             virtuals: true,
             transform: function (doc, ret) {
                 delete ret.password;
+                delete ret.resetPasswordToken;
+                delete ret.resetPasswordExpires;
                 return ret;
             },
         },
@@ -49,12 +59,14 @@ UserSchema.methods.isUserExist = async function (
     const user = await User.findOne(
         { email },
         {
-            id: 1,
+            _id: 1,
             name: 1,
             email: 1,
             phone: 1,
             role: 1,
             password: 1,
+            resetPasswordToken: 1,
+            resetPasswordExpires: 1,
         },
     );
 

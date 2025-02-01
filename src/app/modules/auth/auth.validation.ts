@@ -48,8 +48,47 @@ const refreshTokenSchema = z.object({
     }),
 });
 
+const changePasswordSchema = z.object({
+    body: z.object({
+        oldPassword: z.string({
+            required_error: 'Old password is required',
+        }),
+        newPassword: z
+            .string({
+                required_error: 'New password is required',
+            })
+            .min(6, 'Password must be at least 6 characters long'),
+    }),
+});
+
+const forgotPasswordSchema = z.object({
+    body: z.object({
+        email: z
+            .string({
+                required_error: 'Email is required',
+            })
+            .email('Invalid email format'),
+    }),
+});
+
+const resetPasswordSchema = z.object({
+    body: z.object({
+        token: z.string({
+            required_error: 'Reset token is required',
+        }),
+        newPassword: z
+            .string({
+                required_error: 'New password is required',
+            })
+            .min(6, 'Password must be at least 6 characters long'),
+    }),
+});
+
 export const AuthValidation = {
     registerUserSchema,
     loginUserSchema,
     refreshTokenSchema,
+    changePasswordSchema,
+    forgotPasswordSchema,
+    resetPasswordSchema,
 };

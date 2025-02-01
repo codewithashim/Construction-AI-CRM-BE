@@ -6,7 +6,7 @@ export const apiResponseMessage = {
 
     AUTH: {
         ACCESS_GRANTED: 'Access granted',
-        ACCESS_DENIED: 'Access denied', 
+        ACCESS_DENIED: 'Access denied',
         LOGIN_SUCCESS: 'Login successful',
         LOGOUT_SUCCESS: 'Logout successful',
         REGISTER_SUCCESS: 'User registered successfully',
@@ -19,7 +19,11 @@ export const apiResponseMessage = {
         REFRESH_TOKEN_INVALID: 'Invalid refresh token',
         REFRESH_TOKEN_EXPIRED: 'Refresh token has expired',
         REFRESH_TOKEN_MISSING: 'Refresh token is missing',
-        
+        PASSWORD_RESET_SUCCESS: 'Password reset successful',
+        PASSWORD_CHANGE_SUCCESS: 'Password changed successfully',
+        FORGOT_PASSWORD_EMAIL_SENT: 'Password reset email sent successfully',
+        INVALID_OLD_PASSWORD: 'Invalid old password',
+        INVALID_RESET_TOKEN: 'Invalid reset token',
     },
 
     USERS: {
