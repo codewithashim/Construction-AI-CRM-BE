@@ -8,6 +8,8 @@ export type IUser = {
     phone: string;
     role: ENUM_USER_ROLE;
     password: string;
+    resetPasswordToken?: string;
+    resetPasswordExpires?: Date;
 };
 
 export type IUserMethods = {

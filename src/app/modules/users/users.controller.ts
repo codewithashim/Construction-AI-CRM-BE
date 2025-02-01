@@ -8,7 +8,7 @@ import { IUser } from './users.interface';
 
 const getAllUsers = catchAsync(async (req: Request, res: Response) => {
     const result = await UserService.getAllUsers(req.query);
-
+    console.log(req.user)
     sendResponse<IUser[]>(res, {
         statusCode: httpStatus.OK,
         success: true,

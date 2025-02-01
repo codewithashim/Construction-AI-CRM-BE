@@ -21,3 +21,11 @@ export interface ILoginResponse {
 export interface IRefreshTokenResponse {
     accessToken: string;
 }
+
+export interface IChangePasswordResponse {
+    success: boolean;
+}
+
+export interface IForgotPasswordResponse {
+    emailSent: boolean;
+}
