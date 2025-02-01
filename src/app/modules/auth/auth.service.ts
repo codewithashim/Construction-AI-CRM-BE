@@ -81,14 +81,14 @@ const loginUser = async (payload: ILoginUser): Promise<ILoginResponse> => {
     const accessToken = jwtHelper.createToken(
         tokenPayload,
         envConfig.jwt.secret as Secret,
-        parseInt(envConfig.jwt.expiresIn, 10),
+        '7d',
     );
 
     // Generate refresh token
     const refreshToken = jwtHelper.createToken(
         tokenPayload,
         envConfig.jwt.refreshSecret as Secret,
-        parseInt(envConfig.jwt.refreshExpiresIn, 10),
+        '7d',
     );
 
     return {
@@ -140,7 +140,7 @@ const refreshToken = async (token: string): Promise<IRefreshTokenResponse> => {
             name: user.name,
         },
         envConfig.jwt.secret as Secret,
-        parseInt(envConfig.jwt.expiresIn, 10),
+        '7d',
     );
 
     return { accessToken: newAccessToken };
