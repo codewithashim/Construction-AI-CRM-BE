@@ -36,6 +36,26 @@ export const apiResponseMessage = {
         EMAIL_EXISTS: 'Email already exists',
     },
 
+    PROJECTS: {
+        FETCH_SUCCESS: 'Projects retrieved successfully',
+        FETCH_SINGLE_SUCCESS: 'Project retrieved successfully',
+        CREATE_SUCCESS: 'Project created successfully',
+        UPDATE_SUCCESS: 'Project updated successfully',
+        DELETE_SUCCESS: 'Project deleted successfully',
+        NOT_FOUND: 'Project not found',
+        NAME_EXISTS: 'Project name already exists',
+        INVALID_DATES: 'Invalid project dates',
+        INVALID_CLIENT: 'Invalid client information',
+        INVALID_PARTIES: 'Invalid parties involved',
+        FETCH_BY_CITY_SUCCESS:
+            'Projects for the specified city retrieved successfully',
+        ACTIVE_PROJECTS_FETCH_SUCCESS: 'Active projects retrieved successfully',
+        COMPLETED_PROJECTS_FETCH_SUCCESS:
+            'Completed projects retrieved successfully',
+        UPCOMING_PROJECTS_FETCH_SUCCESS:
+            'Upcoming projects retrieved successfully',
+    },
+
     HEALTH: {
         SERVER_RUNNING: 'Server is up and running',
     },
