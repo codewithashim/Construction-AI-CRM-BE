@@ -56,6 +56,19 @@ export const apiResponseMessage = {
             'Upcoming projects retrieved successfully',
     },
 
+    PARTIES: {
+        FETCH_SUCCESS: 'Parties retrieved successfully',
+        FETCH_SINGLE_SUCCESS: 'Party retrieved successfully',
+        CREATE_SUCCESS: 'Party created successfully',
+        UPDATE_SUCCESS: 'Party updated successfully',
+        DELETE_SUCCESS: 'Party deleted successfully',
+        NOT_FOUND: 'Party not found',
+        NAME_EXISTS: 'Party with this name already exists',
+        INVALID_TYPE: 'Invalid party type',
+        INVALID_GST: 'Invalid GST information',
+        INVALID_PARTY_ID: 'Invalid party ID format',
+    },
+
     HEALTH: {
         SERVER_RUNNING: 'Server is up and running',
     },
