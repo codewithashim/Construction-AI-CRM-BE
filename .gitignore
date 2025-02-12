@@ -18,6 +18,11 @@
 /.env.test.local
 /.env.production.local
 /.env.staging.local
+/.env*
+/.env.development
+/.env.test
+/.env.production
+/.env
 
 # Logs
 /logs
@@ -35,3 +40,4 @@ Thumbs.db
 # Other
 *.log
 *.tmp
+.env
