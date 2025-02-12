@@ -1,5 +1,4 @@
 import { Response } from 'express';
-import bcrypt from 'bcrypt';
 import { envConfig } from '../config/env-config';
 
 export const configureAuthCookie = (
