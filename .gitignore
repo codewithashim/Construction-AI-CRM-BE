@@ -41,3 +41,7 @@ Thumbs.db
 *.log
 *.tmp
 .env
+/.env.development
+/.env.test
+/.env.production
+/.env
